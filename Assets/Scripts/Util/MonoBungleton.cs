@@ -9,8 +9,8 @@ namespace Codes.Util
     public abstract class MonoBungleton<T> : MonoBehaviour where T : MonoBungleton<T>
     {
         private static T _instance;
-        private static bool _initialized;
-        private static readonly object _lock = new object();
+        private static readonly object _lock = new();
+        public static bool IsInitialized { get; private set; }
 
         public static T Instance
         {
@@ -22,26 +22,24 @@ namespace Codes.Util
             }
         }
 
-        public static bool IsInitialized => _initialized;
-
         public static bool TryGetInstance(out T instance)
         {
             instance = _instance;
-            return _initialized;
+            return IsInitialized;
         }
 
         protected virtual void Awake()
         {
             lock (_lock)
             {
-                if (_instance != null && _instance != this)
+                if (_instance && _instance != this)
                 {
                     Destroy(gameObject);
                     return;
                 }
 
-                _instance = (T)this;
-                _initialized = true;
+                _instance = (T) this;
+                IsInitialized = true;
                 Initialize();
             }
         }
@@ -49,15 +47,13 @@ namespace Codes.Util
         /// <summary>
         /// 초기화 코드 - 매 씬의 Awake()에서 실행
         /// </summary>
-        protected abstract void Initialize();
+        protected virtual void Initialize() { }
 
         protected virtual void OnDestroy()
         {
-            if (_instance == this)
-            {
-                _instance = null;
-                _initialized = false;
-            }
+            if (_instance != this) return;
+            _instance = null;
+            IsInitialized = false;
         }
     }
 }
