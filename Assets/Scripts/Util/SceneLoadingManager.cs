@@ -12,7 +12,7 @@ public class SceneLoadingManager : MonoSingleton<SceneLoadingManager>
 {
 
     public event Action<float> OnProgressUpdated;
-    public SceneEnum currentScene = SceneEnum.LoginUi;
+    public SceneEnum currentScene = SceneEnum.Main;
     protected override void Initialize()
     { }
 
@@ -80,6 +80,7 @@ public class SceneLoadingManager : MonoSingleton<SceneLoadingManager>
 }
 public enum SceneEnum
 {
+    Main,
 }
 
 
