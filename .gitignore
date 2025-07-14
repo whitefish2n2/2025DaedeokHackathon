@@ -68,5 +68,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 
-.EditorUserSettings.asset
+*.EditorUserSettings.asset
 
