@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Union_fig_61_AO_0: 979714210568816424
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

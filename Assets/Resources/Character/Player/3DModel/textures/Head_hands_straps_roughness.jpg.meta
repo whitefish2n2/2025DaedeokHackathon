@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Head_hands_straps_roughness_0: 5240019744766621247
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
