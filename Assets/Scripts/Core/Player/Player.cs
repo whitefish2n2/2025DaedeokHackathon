@@ -37,8 +37,9 @@ namespace Core.Player
                 case "PlayerRightLeg":
                     playerRightHandHealth -= 1;
                     break;
-                
             }
+
+            partName = "";
             if (playerHeadHealth == 0 || playerBodyHealth == 0)
             {
                 Debug.Log("GameOver");
