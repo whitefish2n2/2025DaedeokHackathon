@@ -15,7 +15,11 @@ namespace Util
         private void Update()
         {
             if (video.isPlaying) _initializer = true;
-            else if (_initializer) onVideoFinished.Invoke();
+            else if (_initializer)
+            {
+                onVideoFinished.Invoke();
+                _initializer = false;
+            }
         }
     }
 }
