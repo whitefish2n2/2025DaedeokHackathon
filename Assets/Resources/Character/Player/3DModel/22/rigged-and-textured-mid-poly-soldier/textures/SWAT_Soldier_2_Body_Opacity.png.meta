@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SWAT_Soldier_2_Body_Opacity_0: -7300074934400081870
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

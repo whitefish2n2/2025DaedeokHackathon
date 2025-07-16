@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SWAT_Soldier_2_Bottom_Specular_0: 8249248949586172958
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
