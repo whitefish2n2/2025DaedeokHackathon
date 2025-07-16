@@ -10,7 +10,7 @@ namespace GameLogic
         [SerializeField] private SpriteRenderer sprite;
         [SerializeField] private BoxCollider2D boxCollider;
         
-        public override void Hit(float damage = 1f)
+        public override void Hit(int damage = 1)
         {
             health -= damage;
             if (health > 0) return;

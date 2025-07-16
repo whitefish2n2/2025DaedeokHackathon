@@ -4,6 +4,6 @@ namespace GameLogic
 {
     public abstract class Hittable : MonoBehaviour
     {
-        public abstract void Hit(float damage = 1f);
+        public abstract void Hit(int damage = 1);
     }
 }

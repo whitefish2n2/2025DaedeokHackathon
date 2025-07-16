@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      GroundDirtRocky020_DISP_2K_0: -4032256577127611770
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

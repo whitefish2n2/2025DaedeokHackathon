@@ -7,34 +7,32 @@ namespace Core.Player
 {
     public class Player : MonoBungleton<Player>
     {
-        private float playerHeadHealth = 2f;
-        private float playerLeftHandHealth = 3f;
-        private float playerRightHandHealth = 3f;
-        private float playerLeftLegHealth = 3f;
-        private float playerRightLegHealth = 3f;
-        private float playerBodyHealth = 3f;
+        private int playerHeadHealth = 2;
+        private int playerLegHealth = 3;
+        private int playerBodyHealth = 5;
+        private PlayerMove playerMove;
 
-        public void ReduceDamage(string partName, float damage)
+        protected override void Initialize()
+        {
+            playerMove = GetComponent<PlayerMove>();
+            if (playerMove == null) Debug.LogError("playerMove is null");
+        }
+
+        public void ReduceDamage(string partName, int damage)
         {
             switch (partName)
             {
-                case "PlayerHead":
+                case "Head2DSync":
+                    Debug.Log("Hit Head");
                     playerHeadHealth -= damage;
                     break;
-                case "PlayerLeftHand":
-                    playerLeftHandHealth -= damage;
-                    break;
-                case "PlayerRightHand":
-                    playerRightHandHealth -= damage;
-                    break;
-                case "PlayerBody":
+                case "Body2DSync":
+                    Debug.Log("Hit Body");
                     playerBodyHealth -= damage;
                     break;
-                case "PlayerLeftLeg":
-                    playerLeftHandHealth -= damage;
-                    break;
-                case "PlayerRightLeg":
-                    playerRightHandHealth -= damage;
+                case "Lag2DSync":
+                    Debug.Log("Hit Lag");
+                    playerLegHealth -= damage;
                     break;
             }
             
@@ -44,11 +42,11 @@ namespace Core.Player
                 Destroy(gameObject);
             }
 
-            if (playerLeftHandHealth == 0 || playerRightHandHealth == 0)
+            if (playerBodyHealth == 3)
             {
                 Debug.Log("wasd");//명중률 감소
             }
-            if (playerLeftLegHealth == 0 || playerRightLegHealth == 0)
+            if (playerLegHealth ==0)
             {
                 Debug.Log("wasd");//이동속도 감소
             }
