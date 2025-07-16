@@ -34,19 +34,37 @@ public class PlayerMove : MonoBehaviour
         if (status)
         {
             stunning = true;
+            switch (currentPosition)
+            {
+                case Position.Standing:
+                    animator.CrossFade("Rifle Aiming Idle",0.1f);
+                    break;
+                case Position.Kneel:
+                    animator.CrossFade("Idle Crouching Aiming",0.1f);
+                    break;
+                case Position.Prone:
+                    animator.CrossFade("Prone Idle",0.1f);
+                    break;
+            }
         }
         else
         {
             stunning = false;
+            switch (currentPosition)
+            {
+                case Position.Standing:
+                    animator.CrossFade("Rifle Idle",0.1f);
+                    break;
+                case Position.Kneel:
+                    animator.CrossFade("Idle Crouching",0.1f);
+                    break;
+                case Position.Prone:
+                    animator.CrossFade("Prone Idle",0.1f);
+                    break;
+            }
         }
 
-        switch (currentPosition)
-        {
-            case Position.Standing:
-                animator.CrossFade("Rifle Aiming Idle",0.1f);
-                break;
-            
-        }
+        
     }
 
     public void Shot()
@@ -76,12 +94,12 @@ public class PlayerMove : MonoBehaviour
             else if (currentPosition == Position.Kneel)
             {
                 currentPosition = Position.Standing;
-                animator.CrossFade("Idle",0.3f);
+                animator.CrossFade("Rifle Idle",0.3f);
             }
             else if (currentPosition == Position.Prone)
             {
                 currentPosition = Position.Kneel;
-                animator.CrossFade("Idle Crouching", 0.3f);
+                animator.CrossFade("Rifle Prone To Kneel", 0.3f);
             }
         }
 
@@ -90,17 +108,19 @@ public class PlayerMove : MonoBehaviour
             if (currentPosition == Position.Standing)
             {
                 currentPosition = Position.Prone;
-                animator.CrossFade("Rifle Stand To Prone", 0.1f);
+                animator.CrossFade("Rifle Prone To Kneel", 0.1f);
+                animator.CrossFade("Rifle Kneel To Prone", 0.1f);
             }
             else if (currentPosition == Position.Kneel)
             {
                 currentPosition = Position.Prone;
-                animator.CrossFade("Prone Idle",0.3f);
+                animator.CrossFade("Rifle Kneel To Prone",0.3f);
             }
             else if (currentPosition == Position.Prone)
             {
                 currentPosition = Position.Standing;
-                animator.CrossFade("Rifle Idle", 0.3f);
+                animator.CrossFade("Rifle Kneel To Prone", 0.1f);
+                animator.CrossFade("Rifle Prone To Kneel", 0.1f);
             }
         }
         groundedPlayer = controller.isGrounded;
@@ -112,7 +132,7 @@ public class PlayerMove : MonoBehaviour
         {
             watchingRight = move.x > 0;
             if (currentState == State.Dying) return;
-            if (watchingRight) move.z = -1f; 
+            if (watchingRight && currentPosition != Position.Prone) move.z = -1f; 
             gameObject.transform.forward = move;
             if (currentState != State.Moving)
             {
@@ -182,6 +202,7 @@ public class PlayerMove : MonoBehaviour
             if (currentState != State.Idle)
             {
                 currentState = State.Idle;
+                if(watchingRight) transform.eulerAngles = new Vector3(transform.eulerAngles.x,-220,transform.eulerAngles.z);
                 switch (currentPosition)
                 {
                     case Position.Standing:
