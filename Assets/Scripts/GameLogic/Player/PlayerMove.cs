@@ -13,17 +13,46 @@ public class PlayerMove : MonoBehaviour
     private bool stunning;
     private bool running;
 
+    public bool watchingRight { get; private set; }
+    
+
     public bool startRunning = false;
 
     public bool stopRunning = false;
 
+    private float zTemp;
     private void Start()
     {
         animator = GetComponent<Animator>();
         controller = gameObject.GetComponent<CharacterController>();
         animator.Play("Idle");
+        zTemp = transform.position.z;
     }
-    
+
+    public void Zoom(bool status)
+    {
+        if (status)
+        {
+            stunning = true;
+        }
+        else
+        {
+            stunning = false;
+        }
+
+        switch (currentPosition)
+        {
+            case Position.Standing:
+                animator.CrossFade("Rifle Aiming Idle",0.1f);
+                break;
+            
+        }
+    }
+
+    public void Shot()
+    {
+        //todo: shot 애니메이션 상태에 따라 박기
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -36,7 +65,7 @@ public class PlayerMove : MonoBehaviour
             startRunning = false;
             stopRunning = true;
         }
-
+        if (stunning) return;
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (currentPosition == Position.Standing)
@@ -77,18 +106,20 @@ public class PlayerMove : MonoBehaviour
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0) playerVelocity.y = 0f;
         // todo: 창용이의 input system으로 바꾸기
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0.0f, 0f);
         controller.Move(move * (Time.deltaTime * playerSpeed));
         if (move != Vector3.zero)
         {
+            watchingRight = move.x > 0;
             if (currentState == State.Dying) return;
+            if (watchingRight) move.z = -1f; 
             gameObject.transform.forward = move;
             if (currentState != State.Moving)
             {
                 switch (currentPosition)
                 {
                     case Position.Standing:
-                        if(!startRunning && !running) animator.CrossFade("Walking", 0.1f);
+                        if(!startRunning && !running) animator.CrossFade("Rifle Walk", 0.1f);
                         else
                         {
                             animator.CrossFade("Idle To Running", 0.1f);
@@ -134,7 +165,7 @@ public class PlayerMove : MonoBehaviour
                 switch (currentPosition)
                 {
                     case Position.Standing:
-                        if(!startRunning) animator.CrossFade("Walking", 0.1f);
+                        if(!startRunning) animator.CrossFade("Rifle Walk", 0.1f);
                         break;
                     case Position.Kneel:
                         if(!startRunning) animator.CrossFade("Crouch Walking", 0.1f);
@@ -166,10 +197,10 @@ public class PlayerMove : MonoBehaviour
                 
             }
         }
-
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
+    
     
     private enum State
     {

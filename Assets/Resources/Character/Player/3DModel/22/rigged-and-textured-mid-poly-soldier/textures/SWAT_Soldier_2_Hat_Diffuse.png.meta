@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SWAT_Soldier_2_Hat_Diffuse_0: -6302938449388911325
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

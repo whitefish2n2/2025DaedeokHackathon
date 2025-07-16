@@ -687,7 +687,7 @@ MonoBehaviour:
     m_Value: {x: 1, y: 1}
   samples:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 1
   sampleDimmer:
     m_OverrideState: 1
     m_Value: 0.5
@@ -702,13 +702,13 @@ MonoBehaviour:
     m_Value: 1.5
   streaksIntensity:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 0
   streaksLength:
     m_OverrideState: 1
     m_Value: 0.5
   streaksOrientation:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 0
   streaksThreshold:
     m_OverrideState: 1
     m_Value: 0.25
@@ -736,10 +736,10 @@ MonoBehaviour:
     m_Value: 0
   contrast:
     m_OverrideState: 1
-    m_Value: -19
+    m_Value: 7
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.9329617, b: 0.78930813, a: 1}
+    m_Value: {r: 1, g: 0.9623919, b: 0.8459119, a: 1}
   hueShift:
     m_OverrideState: 1
     m_Value: 0
