@@ -1,10 +1,11 @@
 using System;
+using Codes.Util;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Core.Player
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBungleton<Player>
     {
         private float playerHeadHealth = 2f;
         private float playerLeftHandHealth = 3f;
@@ -12,34 +13,31 @@ namespace Core.Player
         private float playerLeftLegHealth = 3f;
         private float playerRightLegHealth = 3f;
         private float playerBodyHealth = 3f;
-        public static string partName;
-        
 
-        void Update()
+        public void ReduceDamage(string partName, float damage)
         {
             switch (partName)
             {
                 case "PlayerHead":
-                    playerHeadHealth -= 1;
+                    playerHeadHealth -= damage;
                     break;
                 case "PlayerLeftHand":
-                    playerLeftHandHealth -= 1;
+                    playerLeftHandHealth -= damage;
                     break;
                 case "PlayerRightHand":
-                    playerRightHandHealth -= 1;
+                    playerRightHandHealth -= damage;
                     break;
                 case "PlayerBody":
-                    playerBodyHealth -= 1;
+                    playerBodyHealth -= damage;
                     break;
                 case "PlayerLeftLeg":
-                    playerLeftHandHealth -= 1;
+                    playerLeftHandHealth -= damage;
                     break;
                 case "PlayerRightLeg":
-                    playerRightHandHealth -= 1;
+                    playerRightHandHealth -= damage;
                     break;
             }
-
-            partName = "";
+            
             if (playerHeadHealth == 0 || playerBodyHealth == 0)
             {
                 Debug.Log("GameOver");
@@ -55,6 +53,5 @@ namespace Core.Player
                 Debug.Log("wasd");//이동속도 감소
             }
         }
-        
     }
 }
