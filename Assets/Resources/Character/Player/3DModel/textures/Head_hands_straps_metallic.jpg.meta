@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Head_hands_straps_metallic_0: -420466706277860872
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

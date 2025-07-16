@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Union_fig_61_albedo_0: 8582792245166745177
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
