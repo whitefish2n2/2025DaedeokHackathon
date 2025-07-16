@@ -88,7 +88,7 @@ public class PlayerMove : MonoBehaviour
                 switch (currentPosition)
                 {
                     case Position.Standing:
-                        if(!startRunning && !running) animator.CrossFade("Walking", 0.1f);
+                        if(!startRunning && !running) animator.CrossFade("Rifle Walk", 0.1f);
                         else
                         {
                             animator.CrossFade("Idle To Running", 0.1f);
