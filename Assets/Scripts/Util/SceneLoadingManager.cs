@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using Plugins;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -47,7 +46,6 @@ public class SceneLoadingManager : MonoSingleton<SceneLoadingManager>
         
         // 실제 씬 로드 시작
         var loadSceneOp = SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Single);
-
         onLoadStartCallback?.Invoke();
 
         // 로딩 진행 대기 및 진행률 업데이트, 진행률 업데이트 이벤트 호출

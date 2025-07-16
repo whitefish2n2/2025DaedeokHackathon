@@ -14,7 +14,7 @@ namespace UI
 
         public void GameStartButton()
         {
-            Fader.Fade(() => SceneLoadingManager.Instance.LoadSceneAsync("InGame 1"));
+            Fader.Fade(() => SceneLoadingManager.Instance.LoadSceneWithLoadingScene("InGame 1", "LoadingScene"));
         }
 
         public void ContinueButton()
