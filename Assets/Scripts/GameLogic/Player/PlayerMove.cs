@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -12,7 +13,9 @@ public class PlayerMove : MonoBehaviour
     private Position currentPosition = Position.Standing;
     private bool stunning;
     private bool running;
-
+    
+    private CinemachineImpulseSource impulseSource;
+    
     public bool watchingRight { get; private set; }
     
 
@@ -23,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     private float zTemp;
     private void Start()
     {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
         animator = GetComponent<Animator>();
         controller = gameObject.GetComponent<CharacterController>();
         animator.Play("Idle");
@@ -69,7 +73,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Shot()
     {
-        //todo: shot 애니메이션 상태에 따라 박기
+        impulseSource.GenerateImpulse();
     }
     private void Update()
     {
@@ -202,7 +206,7 @@ public class PlayerMove : MonoBehaviour
             if (currentState != State.Idle)
             {
                 currentState = State.Idle;
-                if(watchingRight) transform.eulerAngles = new Vector3(transform.eulerAngles.x,-220,transform.eulerAngles.z);
+                if(watchingRight) transform.eulerAngles = new Vector3(transform.eulerAngles.x,-240,transform.eulerAngles.z);
                 switch (currentPosition)
                 {
                     case Position.Standing:

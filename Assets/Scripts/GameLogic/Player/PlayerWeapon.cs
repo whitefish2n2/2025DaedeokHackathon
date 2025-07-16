@@ -45,7 +45,7 @@ public class PlayerWeapon : MonoBehaviour
             if (zoomed)
             {
                 if (leftBullet == 0||!canShot) return;
-                playerMove?.Zoom(false);
+                playerMove?.Shot();
                 
                 var b = Instantiate(bullet, gunShotOrigin.transform.position,
                 Quaternion.identity);

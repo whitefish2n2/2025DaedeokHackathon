@@ -1,5 +1,6 @@
 using System;
 using Codes.Util;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Core.Player
         private int playerLegHealth = 3;
         private int playerBodyHealth = 5;
         private PlayerMove playerMove;
+        
 
         protected override void Initialize()
         {
