@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Kit1_albedo_0: 2928574166878594227
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
