@@ -6,13 +6,13 @@ using Util;
 
 namespace UI
 {
-    public class TitleSceneButtons : MonoBehaviour
+    public class UIButtonHandler : MonoBehaviour
     {
         public Button continueButton;
         public EventTrigger continueTrigger;
         private void Start()
         {
-            if (PlayerPrefs.GetInt("Progress", 0) == 0) return;
+            if (PlayerPrefs.GetInt("Progress", 0) == 0 || !continueButton || !continueTrigger) return;
             continueButton.interactable = true;
             continueTrigger.triggers[0].callback.AddListener(_ => OnMouseEnter());
         }
@@ -35,6 +35,11 @@ namespace UI
         public void QuitButton()
         {
             Fader.Fade(() => Application.Quit(0));
+        }
+
+        public void TitleSceneButton()
+        {
+            Fader.Fade(() => SceneLoadingManager.Instance.LoadSceneAsync("TitleScene"));
         }
     }
 }
