@@ -43,8 +43,8 @@ namespace Core.Player
             
             if (playerHeadHealth == 0 || playerBodyHealth == 0)
             {
-                Debug.Log("GameOver");
-                Destroy(gameObject);
+                playerMove.DoDie();
+                SceneLoadingManager.Instance.LoadSceneAsync("DeadScene");
             }
 
             if (playerBodyHealth == 3)

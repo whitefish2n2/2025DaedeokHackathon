@@ -278,4 +278,9 @@ public class PlayerMove : MonoBehaviour
         Kneel,
         Prone,
     }
+
+    public void DoDie()
+    {
+        animator.CrossFade("Dying", 0.001f);
+    }
 }
