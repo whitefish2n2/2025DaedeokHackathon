@@ -2038,6 +2038,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: NotPostProcessedCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 9091128480519014416, guid: 1916bd8c02d1b9d4eb324a1bb02050b4, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091128480519014416, guid: 1916bd8c02d1b9d4eb324a1bb02050b4, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091128480519014416, guid: 1916bd8c02d1b9d4eb324a1bb02050b4, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2119,6 +2131,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2727137956154333158, guid: 065362dfea9ec3243b2c648fcf350bea, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2727137956154333158, guid: 065362dfea9ec3243b2c648fcf350bea, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 2727137956154333158, guid: 065362dfea9ec3243b2c648fcf350bea, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 6127555908207925051, guid: 065362dfea9ec3243b2c648fcf350bea, type: 3}
       propertyPath: m_Name
       value: PostProcessedCanvas

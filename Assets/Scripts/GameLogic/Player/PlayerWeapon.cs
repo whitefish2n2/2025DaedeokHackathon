@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using Core.Player;
 using GameLogic;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using Util;
 using Quaternion = UnityEngine.Quaternion;
@@ -83,15 +79,12 @@ public class PlayerWeapon : MonoBehaviour
                 Quaternion.identity);
 //                Debug.Log(gunShotOrigin.transform.position);
                 b.GetComponent<Bullet>().Shot(playerMove?.watchingRight??true);
-                var result =Physics2D.RaycastAll(gunShotOrigin.transform.position, 
+                var result =Physics2D.Raycast(gunShotOrigin.transform.position, 
                     (playerMove?.watchingRight ??true? Vector3.right : Vector3.left)
                     );
-                foreach (RaycastHit2D hit in result)
+                if (result.transform.gameObject.TryGetComponent<Hittable>(out var h))
                 {
-                    if (hit.transform.gameObject.TryGetComponent<Hittable>(out var h))
-                    {
-                        h.Hit(1);
-                    }
+                    h.Hit(1);
                 }
                 
                 Destroy(b,3f);

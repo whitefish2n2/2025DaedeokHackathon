@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float lifeTime = 3f;
     public void Shot(bool isRight)
     {
-        transform.DOMove(transform.position + 30*(isRight?1:-1)*Vector3.right, lifeTime);
+        transform.DOMove(transform.position + 100*(isRight?1:-1)*Vector3.right, lifeTime);
     }
 
 }
