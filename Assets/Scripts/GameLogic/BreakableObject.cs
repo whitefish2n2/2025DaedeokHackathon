@@ -35,5 +35,17 @@ namespace GameLogic
             op.SetAverageColor(sprite.sprite, sprite.color);
             Destroy(gameObject);
         }
+        
+        public void InstantBreak() 
+        {
+            health = 0;
+            _positions[1].x = Mathf.Lerp(-boxCollider.bounds.extents.x - 0.1f, boxCollider.bounds.extents.x + 0.2f, health / _maxHealth);
+            healthBar.SetPositions(_positions);
+            if (health > 0) return;
+            var op = Instantiate(brokenObjectParticle, transform.position, Quaternion.identity);
+            op.transform.localScale = boxCollider.bounds.extents * 2;
+            op.SetAverageColor(sprite.sprite, sprite.color);
+            Destroy(gameObject);
+        }
     }
 }
