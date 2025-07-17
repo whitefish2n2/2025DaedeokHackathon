@@ -14,10 +14,14 @@ namespace GameLogic
 
         private void Update()
         {
-            
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
             float zRotation = transform.eulerAngles.z;
             target.transform.rotation = Quaternion.Euler(0, 0, zRotation);
+        }
+
+        private void OnDestroy()
+        {
+            Destroy(target);
         }
     }
 }

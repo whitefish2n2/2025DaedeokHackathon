@@ -1,5 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
+using Util;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -181,6 +182,7 @@ public class PlayerMove : MonoBehaviour
                         if(!startRunning && !running) animator.CrossFade("Rifle Walk", 0.1f);
                         else
                         {
+                            AudioManager.Instance.PlaySound(SoundType.Walk);
                             animator.CrossFade("Idle To Running", 0.1f);
                             running = true;
                             startRunning = false;

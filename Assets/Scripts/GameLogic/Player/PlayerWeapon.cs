@@ -1,29 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Player;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using Util;
 
 public class PlayerWeapon : MonoBehaviour
 {
     [SerializeField] private float shotCoolDown;
     private float currentShotCoolDown;
-    private float cooldownPrograss = 1;
+    private float cooldownProgress = 1;
     public int leftBullet;
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject gunShotOrigin;
     public bool canShot = true;
     [Header("Heal")]
     [SerializeField] private float healCoolDown;
-    public int leftHeal;
-    private float currentHealCoolDown;
-    private float healCooldownPrograss = 1;
-    public bool canHeal = true;
+    [SerializeField]public int leftHeal;
+    [SerializeField]public float healTime;
+    [SerializeField]private float currentHealCoolDown;
+    [SerializeField]private float healCooldownProgress = 1;
+    [SerializeField]public bool canHeal = true;
     
 
-    private bool zoomed;
+    [SerializeField]private bool zoomed;
 
-    private bool healing;
+    [SerializeField]private bool healing;
     
     private PlayerMove playerMove;
     
@@ -33,6 +36,8 @@ public class PlayerWeapon : MonoBehaviour
     {
         ActiveItemUIUpdater.Instance.SetBullet(leftBullet);
         ActiveItemUIUpdater.Instance.SetBulletProgress(1);
+        ActiveItemUIUpdater.Instance.SetHeal(leftHeal);
+        ActiveItemUIUpdater.Instance.SetHealProgress(1);
         playerMove = GetComponent<PlayerMove>();
     }
 
@@ -52,7 +57,9 @@ public class PlayerWeapon : MonoBehaviour
         {
             if(healing)
             {
+                Debug.Log("Healing Cancel");
                 CancelHeal();
+                healing = false;
                 return;
             }
             healing = true;
@@ -66,10 +73,11 @@ public class PlayerWeapon : MonoBehaviour
             {
                 if (leftBullet == 0||!canShot) return;
                 playerMove?.Shot();
+                AudioManager.Instance.PlaySound(SoundType.BulletShot);
                 
                 var b = Instantiate(bullet, gunShotOrigin.transform.position,
                 Quaternion.identity);
-                Debug.Log(gunShotOrigin.transform.position);
+//                Debug.Log(gunShotOrigin.transform.position);
                 b.GetComponent<Bullet>().Shot(playerMove?.watchingRight??true);
                 Destroy(b,3f);
                 leftBullet--;
@@ -82,29 +90,71 @@ public class PlayerWeapon : MonoBehaviour
 
     public void Heal()
     {
+        if (leftHeal == 0) return;
         if (canHeal)
         {
+            canceled = false;
+            Debug.Log("Healing");
+            healing = true;
             playerMove?.Heal();
+            StartCoroutine(HealingFlow());
+            AudioManager.Instance.PlaySound(SoundType.Bandages);
         }
     }
+
+    [SerializeField]private bool canceled = false;
     public void CancelHeal()
     {
-        playerMove?.CancelHeal();
+        if (healing)
+        {
+            ActionBar.Instance.DoneProgress();
+            playerMove?.CancelHeal();
+            canceled = true;
+            healing = false;
+        }
+        
     }
 
+    IEnumerator HealingFlow()
+    {
+        float elapsedTime = 0;
+        while (canceled == false && elapsedTime < shotCoolDown)
+        {
+            elapsedTime += Time.deltaTime;
+            ActionBar.Instance?.SetProgress(elapsedTime / healTime);
+            yield return null;
+        }
+        if (canceled == true)
+        {
+            ActiveItemUIUpdater.Instance.SetHeal(leftHeal);
+            ActiveItemUIUpdater.Instance.SetHealProgress(1);
+        }
+        else
+        {
+            Player.Instance?.Heal(1);
+            Debug.Log("Healing Success");
+            leftHeal--;
+            ActiveItemUIUpdater.Instance.SetHeal(leftHeal);
+            ActiveItemUIUpdater.Instance.SetHealProgress(1);
+            playerMove.CancelHeal();
+            StartCoroutine(HealCoolDownFlow());
+            ActionBar.Instance?.DoneProgress();
+            healing = false;
+        }
+    }
     IEnumerator ShotCoolDownFlow()
     {
         canShot = false;
         float elapsedTime = 0;
-        cooldownPrograss = 0;
+        cooldownProgress = 0;
         while (elapsedTime < shotCoolDown)
         {
             elapsedTime += Time.deltaTime;
-            cooldownPrograss = Mathf.Clamp(elapsedTime / shotCoolDown, 0, 1);
-            ActiveItemUIUpdater.Instance.SetBulletProgress(cooldownPrograss);
+            cooldownProgress = Mathf.Clamp(elapsedTime / shotCoolDown, 0, 1);
+            ActiveItemUIUpdater.Instance.SetBulletProgress(cooldownProgress);
             yield return null;
         }
-        cooldownPrograss = 1;
+        cooldownProgress = 1;
         yield return null;
         canShot = true;
     }
@@ -113,15 +163,15 @@ public class PlayerWeapon : MonoBehaviour
     {
         canHeal = false;
         float elapsedTime = 0;
-        healCooldownPrograss = 0;
+        healCooldownProgress = 0;
         while (elapsedTime < healCoolDown)
         {
             elapsedTime += Time.deltaTime;
-            healCooldownPrograss = Mathf.Clamp(elapsedTime / healCoolDown, 0, 1);
-            ActiveItemUIUpdater.Instance.SetBulletProgress(healCooldownPrograss);
+            healCooldownProgress = Mathf.Clamp(elapsedTime / healCoolDown, 0, 1);
+            ActiveItemUIUpdater.Instance.SetHealProgress(healCooldownProgress);
             yield return null;
         }
-        healCooldownPrograss = 1;
+        healCooldownProgress = 1;
         yield return null;
         canHeal = true;
     }
