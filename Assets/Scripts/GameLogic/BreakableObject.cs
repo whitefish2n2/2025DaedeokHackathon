@@ -36,7 +36,7 @@ namespace GameLogic
             Destroy(gameObject);
         }
         
-        public void InstantBreak() 
+        public void InstantBreak()
         {
             health = 0;
             _positions[1].x = Mathf.Lerp(-boxCollider.bounds.extents.x - 0.1f, boxCollider.bounds.extents.x + 0.2f, health / _maxHealth);
