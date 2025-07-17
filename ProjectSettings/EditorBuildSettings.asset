@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoadingScene.unity
     guid: 2c73d1938dab56b459d06a9cbbd547c7
+  - enabled: 1
+    path: Assets/Scenes/InGame 1.unity
+    guid: 936f75b92564395459257428225ffb67
+  - enabled: 1
+    path: Assets/Scenes/DeadScene.unity
+    guid: 70282766a0cfd8347a5fc1a992cfea69
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
