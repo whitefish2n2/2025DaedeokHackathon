@@ -33,6 +33,10 @@ public class SceneLoadingManager : MonoSingleton<SceneLoadingManager>
     }
     
     public float currentProgress = 0f;
+    public void LoadSceneWithLoadingScene(string targetScene)
+    {
+        LoadSceneWithLoadingScene(targetScene, "LoadingScene");
+    }
     public void LoadSceneWithLoadingScene(string targetScene, string loadingScene, Action onLoadStartCallback = null, List<AsyncOperation> works = null, Action onLoadEndCallback = null)
     {
         StartCoroutine(LoadSceneWithLoadSceneSequence(targetScene, loadingScene, works, onLoadStartCallback, onLoadEndCallback));

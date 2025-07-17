@@ -1,65 +1,70 @@
-using UnityEngine;
-using TMPro;
 using System.Collections;
-using UnityEngine.InputSystem;
+using Codes.Util;
+using TMPro;
+using UnityEngine;
 
-public class DialogueSystem : MonoBehaviour
+namespace UI
 {
-    public TextMeshProUGUI textcomponent;
-    public TextMeshProUGUI textname;
-    public string[] lines;
-    public float textSpeed;
-
-    private int index;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class DialogueSystem : MonoBungleton<DialogueSystem>
     {
-        textcomponent.text = string.Empty;
-        StartDialogue();
-    }
+        public TextMeshProUGUI textComponent;
+        public TextMeshProUGUI textName;
+        public string[] lines;
+        public float textSpeed;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)){
-            if (textcomponent.text == lines[index])
-            {
-                NextLIne();
-            }
-            else { 
-                StopAllCoroutines();
-                textcomponent.text = lines[index];
-            }
-        }
-    }
-
-    void StartDialogue()
-    {
-        index = 0;
-        StartCoroutine(TypeLine());
-    }
-
-    IEnumerator TypeLine()
-    {
-        foreach (char c in lines[index])
+        private int _index;
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        private void Start()
         {
-            textcomponent.text += c;
-            yield return new WaitForSeconds(textSpeed);
-        }
-
-    }
-
-    void NextLIne()
-    {
-        if(index < lines.Length - 1)
-        {
-            index++;
-            textcomponent.text = string.Empty;
-            StartCoroutine (TypeLine());
-        }
-        else
-        {
+            textComponent.text = string.Empty;
             gameObject.SetActive(false);
+        }
+
+        // Update is called once per frame
+        private void Update()
+        {
+            if (!Input.GetMouseButtonDown(0) && !Input.GetKeyDown(KeyCode.Space)) return;
+            if (textComponent.text == lines[_index]) NextLine();
+            else
+            { 
+                StopAllCoroutines();
+                textComponent.text = lines[_index];
+            }
+        }
+
+        public void StartDialogue()
+        {
+            _index = 0;
+            StartCoroutine(TypeLine());
+        }
+
+        private IEnumerator TypeLine()
+        {
+            textComponent.text = string.Empty;
+            foreach (var c in lines[_index])
+            {
+                textComponent.text += c;
+                yield return new WaitForSeconds(textSpeed);
+            }
+        }
+
+        private void NextLine()
+        {
+            if(_index < lines.Length - 1)
+            {
+                _index++;
+                StartCoroutine(TypeLine());
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
+        public void SetDialogue(string[] lines, string name)
+        {
+            this.lines = lines;
+            this.textName.text = name;
         }
     }
 }

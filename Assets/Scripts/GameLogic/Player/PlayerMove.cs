@@ -1,4 +1,6 @@
+using Unity.Cinemachine;
 using UnityEngine;
+using Util;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -12,7 +14,9 @@ public class PlayerMove : MonoBehaviour
     private Position currentPosition = Position.Standing;
     private bool stunning;
     private bool running;
-
+    
+    private CinemachineImpulseSource impulseSource;
+    
     public bool watchingRight { get; private set; }
     
 
@@ -23,6 +27,7 @@ public class PlayerMove : MonoBehaviour
     private float zTemp;
     private void Start()
     {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
         animator = GetComponent<Animator>();
         controller = gameObject.GetComponent<CharacterController>();
         animator.Play("Idle");
@@ -34,16 +39,18 @@ public class PlayerMove : MonoBehaviour
         if (status)
         {
             stunning = true;
+            if(watchingRight) transform.eulerAngles = new Vector3(transform.eulerAngles.x,-240,transform.eulerAngles.z);
+            else transform.eulerAngles = new Vector3(transform.eulerAngles.x,-120,transform.eulerAngles.z);
             switch (currentPosition)
             {
                 case Position.Standing:
-                    animator.CrossFade("Rifle Aiming Idle",0.1f);
+                    animator.CrossFade("Rifle Aiming Idle",0.05f);
                     break;
                 case Position.Kneel:
-                    animator.CrossFade("Idle Crouching Aiming",0.1f);
+                    animator.CrossFade("Idle Crouching Aiming",0.05f);
                     break;
                 case Position.Prone:
-                    animator.CrossFade("Prone Idle",0.1f);
+                    animator.CrossFade("Prone Idle",0.05f);
                     break;
             }
         }
@@ -63,13 +70,45 @@ public class PlayerMove : MonoBehaviour
                     break;
             }
         }
+    }
 
-        
+    public void Heal()
+    {
+        stunning = true;
+        switch (currentPosition)
+        {
+            case Position.Standing:
+                animator.CrossFade("Reloading",0.1f);
+                break;
+            case Position.Kneel:
+                animator.CrossFade("Reload",0.1f);
+                break;
+            case Position.Prone:
+                animator.CrossFade("Prone Reloading",0.1f);
+                break;
+        }
+    }
+
+    public void CancelHeal()
+    {
+        stunning = false;
+        switch (currentPosition)
+        {
+            case Position.Standing:
+                animator.CrossFade("Rifle Idle",0.01f);
+                break;
+            case Position.Kneel:
+                animator.CrossFade("Idle Crouching",0.01f);
+                break;
+            case Position.Prone:
+                animator.CrossFade("Prone Idle",0.01f);
+                break;
+        }
     }
 
     public void Shot()
     {
-        //todo: shot 애니메이션 상태에 따라 박기
+        impulseSource.GenerateImpulse();//카메라 흔들기
     }
     private void Update()
     {
@@ -84,6 +123,7 @@ public class PlayerMove : MonoBehaviour
             stopRunning = true;
         }
         if (stunning) return;
+        else
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (currentPosition == Position.Standing)
@@ -142,6 +182,7 @@ public class PlayerMove : MonoBehaviour
                         if(!startRunning && !running) animator.CrossFade("Rifle Walk", 0.1f);
                         else
                         {
+                            AudioManager.Instance.PlaySound(SoundType.Walk);
                             animator.CrossFade("Idle To Running", 0.1f);
                             running = true;
                             startRunning = false;
@@ -202,7 +243,7 @@ public class PlayerMove : MonoBehaviour
             if (currentState != State.Idle)
             {
                 currentState = State.Idle;
-                if(watchingRight) transform.eulerAngles = new Vector3(transform.eulerAngles.x,-220,transform.eulerAngles.z);
+                if(watchingRight) transform.eulerAngles = new Vector3(transform.eulerAngles.x,-240,transform.eulerAngles.z);
                 switch (currentPosition)
                 {
                     case Position.Standing:
@@ -236,5 +277,10 @@ public class PlayerMove : MonoBehaviour
         Standing,
         Kneel,
         Prone,
+    }
+
+    public void DoDie()
+    {
+        animator.CrossFade("Dying", 0.001f);
     }
 }
