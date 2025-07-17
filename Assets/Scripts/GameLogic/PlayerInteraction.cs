@@ -5,14 +5,18 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     public GameObject rayOrigin;
-    RaycastHit2D[] hit;
 
-    public GameObject interactTextGameObject;
-    public TextMeshProUGUI interactText;
     public Interactable currentInteractable;
     public GameObject currentInteractableGameObject;
+
+    public PlayerInteraction(TextMeshProUGUI interactText)
+    {
+    }
+
+
     private void Update()
     {
+        int interactionSize = 0;
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (currentInteractable)
@@ -21,21 +25,29 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
         int interactableCount = 0;
-        var size = Physics2D.RaycastNonAlloc(
+        var hit = Physics2D.RaycastAll(
             rayOrigin.transform.position, 
             Vector2.right, 
-            hit, 
             100f, 
             LayerMask.GetMask("Interactable"));
-        if(hit.Length == 0){ currentInteractable = null; currentInteractableGameObject = null; }
+        
         foreach (RaycastHit2D h in hit)
         {
             if (h.transform.gameObject == currentInteractableGameObject) return;
             if(h.transform.gameObject.TryGetComponent<Interactable>(out var i))
             {
-                interactText.text = i.annotation;
+                interactionSize++;
+                InteractionAnnotationPosManager.Instance.AppearAnnotation();
+                InteractionAnnotationPosManager.Instance.SetText(i.annotation);
             }
         }
+        if (interactionSize == 0)
+        {
+            currentInteractable = null; 
+            currentInteractableGameObject = null;
+            InteractionAnnotationPosManager.Instance.DisappearAnnotation();
+        }
+        
 
         
     }

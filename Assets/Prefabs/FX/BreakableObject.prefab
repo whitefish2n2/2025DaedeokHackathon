@@ -321,6 +321,7 @@ MonoBehaviour:
   sprite: {fileID: 1725829954984493247}
   boxCollider: {fileID: 6759782943712718971}
   healthBar: {fileID: 4370503287822385646}
+  healthBarBackground: {fileID: 3698102788799133194}
 --- !u!1 &8936035221933400196
 GameObject:
   m_ObjectHideFlags: 0

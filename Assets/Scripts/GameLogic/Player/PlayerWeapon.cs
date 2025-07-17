@@ -1,10 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Core.Player;
+using GameLogic;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using Util;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerWeapon : MonoBehaviour
 {
@@ -79,6 +83,17 @@ public class PlayerWeapon : MonoBehaviour
                 Quaternion.identity);
 //                Debug.Log(gunShotOrigin.transform.position);
                 b.GetComponent<Bullet>().Shot(playerMove?.watchingRight??true);
+                var result =Physics2D.RaycastAll(gunShotOrigin.transform.position, 
+                    (playerMove?.watchingRight ??true? Vector3.right : Vector3.left)
+                    );
+                foreach (RaycastHit2D hit in result)
+                {
+                    if (hit.transform.gameObject.TryGetComponent<Hittable>(out var h))
+                    {
+                        h.Hit(1);
+                    }
+                }
+                
                 Destroy(b,3f);
                 leftBullet--;
                 ActiveItemUIUpdater.Instance.SetBullet(leftBullet);
