@@ -82,7 +82,7 @@ public class PlayerWeapon : MonoBehaviour
                 var result =Physics2D.Raycast(gunShotOrigin.transform.position, 
                     (playerMove?.watchingRight ??true? Vector3.right : Vector3.left)
                     );
-                if (result.transform.gameObject.TryGetComponent<Hittable>(out var h))
+                if (result.transform?.gameObject.TryGetComponent<Hittable>(out var h)??false)
                 {
                     h.Hit(1);
                 }

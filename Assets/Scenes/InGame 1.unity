@@ -2739,6 +2739,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5888443253929500909, guid: 1916bd8c02d1b9d4eb324a1bb02050b4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -334.1504
+      objectReference: {fileID: 0}
+    - target: {fileID: 5888443253929500909, guid: 1916bd8c02d1b9d4eb324a1bb02050b4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -111.18359
+      objectReference: {fileID: 0}
     - target: {fileID: 7363864585156752367, guid: 1916bd8c02d1b9d4eb324a1bb02050b4, type: 3}
       propertyPath: m_Name
       value: NotPostProcessedCanvas
@@ -2776,6 +2784,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2918756671765429034, guid: 91f47bf3e690e8f4db3c22b2c3027d71, type: 3}
+      propertyPath: leftBullet
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918756671765429034, guid: 91f47bf3e690e8f4db3c22b2c3027d71, type: 3}
+      propertyPath: shotCoolDown
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3242513326365866956, guid: 91f47bf3e690e8f4db3c22b2c3027d71, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.09582615
